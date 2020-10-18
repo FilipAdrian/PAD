@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1200,
+        "name": "Tesla",
+        "surname": "Mike",
+        "age": 45,
+        "accountState": "approved",
+        "type": "manager"
+    },
+    {
+        "id": 230,
+        "name": "Western",
+        "surname": "Joe",
+        "accountState": "inProgress",
+        "age": 33,
+        "type": "admin"
+    }
+]

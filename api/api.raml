@@ -1,0 +1,142 @@
+#%RAML 1.0
+title: Simple User Api
+baseUri: http://localhost:8081
+mediaType: application/json
+securitySchemes:
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+/users:
+  get:
+    description: Get all Users
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                surname:
+                  type: string
+                age:
+                  type: integer
+                "type":
+                  type: string
+                  enum: [ admin, manager, seller]
+                accountState:
+                  type: string
+                  enum: [approved, inProgress, rejected]  
+            example: !include examples/get-all-users.json
+  post:
+    description: create a new user
+    body:
+      application/json:
+        type: object
+        properties:
+          name:
+            type: string
+          surname:
+            type: string
+          dateOfBirth:
+            description: date format is DD/MM/YYYY
+            type: string 
+          "type":
+            type: string
+            enum: [ admin, manager, seller]
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/create-user.json
+
+  /{userId}:
+    get:
+      description: Get User By Id
+      responses:
+        200:
+          body:
+            application/json:
+              example:     {
+                  "id": 230,
+                  "name": "Western",
+                  "surname": "Joe",
+                  "accountState": "inProgress",
+                  "age": 33,
+                  "type": "admin"
+              }
+        404:
+          body:
+            example: { "msg": "No User with such Id"}
+
+    put:
+      description: Update User
+      body:
+        type: object
+        properties:
+          name:
+            type: string
+            required: false
+          surname:
+            type: string
+            required: false
+          dateOfBirth:
+            description: date format is DD/MM/YYYY
+            type: string 
+            required: false
+          "type":
+            type: string
+            required: false
+            enum: [ admin, manager, seller]
+      responses:
+        200:
+          body:
+            example: { "msg": "User was successfully updated"}
+        404:
+          body:
+            example: { "msg": "No User with such Id"}
+    delete:
+      securedBy: basic
+      description: Remove User
+      responses:
+        204:
+          #Success Response
+        404:
+          body:
+            example: { "msg": "No User with such Id"}
+    
+    /status:
+      patch:
+        securedBy: basic
+        description: Update account status with 5 min
+        body:
+          type: object
+          properties:
+            accountState:
+              type: string
+              enum: [approved, inProgress, rejected]
+        responses:
+          200:
+            body:
+              example: { "msg": "Status was successfully updated"}
+          401:
+            body:
+              example: { "msg": "Unautherized request"}
+          404:
+            body:
+              example: { "msg": "No User with such Id"}
+          408:
+            body:
+              example: { "msg": "Allowed time for modification was exceeded "}
+            
+                
+          
+      
+
+              
+        
+              
