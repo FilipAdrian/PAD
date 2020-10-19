@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    depends_on:
+      - postgres_db
+    networks:
+      - default
+    ports:
+      - "0.0.0.0:8081:8081"
+    volumes:
+      - .:/user_service
+    environment:
+#      #DB Config
+      DB_HOST: postgres_db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_SCHEMA: postgres
+#     #api properties
+      API_PORT: 8081
+      API_HOST: 0.0.0.0
+      API_BASE_PATH: "/api/"
+      DEFAULT_RATE_LIMIT: "5 per minute"
+      DEFAULT_CAPACITY: 10
+      GATEWAY_URL: "https://httpbin.org/post"
+
+  postgres_db:
+    image: postgres:latest
+    networks:
+      - default
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "postgres"
+#      PGDATA: /var/lib/postgresql/data/pgdata
+
+    restart: on-failure
+
+volumes:
+  pgdata:
+
