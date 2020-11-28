@@ -16,7 +16,6 @@ logging.basicConfig(format='%(asctime)-15s -%(process)d-%(levelname)s-%(message)
 logger = logging.getLogger('config')
 
 
-
 def get_env_variable():
     return {
         "DB_USERNAME": os.environ.get('DB_USERNAME'),
@@ -62,9 +61,10 @@ def check_db_connection():
 @retry((RequestException, ConnectionError), tries=3, delay=2, backoff=2, logger=logger)
 def connect_to_gateway():
     url = env_args["GATEWAY_URL"]
-    payload = {"url": f'http://{env_args["API_HOST"]}:{env_args["API_PORT"]}{env_args["API_BASE_PATH"]}'}
+    payload = {"serviceType": "users",
+               "url": f'http://{env_args["API_HOST"]}:{env_args["API_PORT"]}{env_args["API_BASE_PATH"]}'}
     g_request = requests.post(url, payload)
-    print(f"Response: {g_request.json()}")
+    print(f"Gateway Connection Established ...")
     return g_request.status_code
 
 

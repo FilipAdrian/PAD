@@ -12,6 +12,7 @@ api_capacity = int(env_args["DEFAULT_CAPACITY"])
 user_create_requirements = RequestParser(bundle_errors=True)
 user_create_requirements.add_argument("name", type=str, required=True, help="Name has to be passed")
 user_create_requirements.add_argument("surname", type=str, required=True, help="Surname has to be passed")
+user_create_requirements.add_argument("money_amount", type=float, required=True, help="Money Amount has to be passed")
 user_create_requirements.add_argument("birthdate", type=str, required=True, help="Birthdate has to be passed")
 user_create_requirements.add_argument("type", type=str, required=True, choices=("admin", "manager", "seller"),
                                       help="Type has to be passed")
@@ -19,6 +20,7 @@ user_create_requirements.add_argument("type", type=str, required=True, choices=(
 user_update_requirements = RequestParser(bundle_errors=True)
 user_update_requirements.add_argument("name", type=str, required=False, help="Name has to be passed")
 user_update_requirements.add_argument("surname", type=str, required=False, help="Surname has to be passed")
+user_update_requirements.add_argument("money_amount", type=float, required=False, help="Money Amount has to be passed")
 user_update_requirements.add_argument("birthdate", type=lambda x: datetime.strptime(x, '%Y-%m-%d'),
                                       required=False, help="Birthdate has to be passed")
 user_update_requirements.add_argument("type", type=str, required=False, choices=("admin", "manager", "seller"),
@@ -41,6 +43,7 @@ def wrap_status_response(result):
     }
 
     return response
+
 
 def get_user_by_id(user_id):
     user = search_user_by_id(user_id)
@@ -71,11 +74,13 @@ class Users(Resource):
             return err.messages, 422
         username, password = get_random_alphanumeric_string(6), get_random_alphanumeric_string(6)
         new_user = UserModel(name=data['name'], surname=data['surname'],
-                             type=data['type'], birthdate=data['birthdate'], username=username, password=password)
+                             type=data['type'], birthdate=data['birthdate'], money_amount=data['money_amount'],
+                             username=username, password=password)
 
         db.session.add(new_user)
+        db.session.flush()
         db.session.commit()
-        return {"username": username, "password": password}, 201
+        return {"user_id": new_user.id, "username": username, "password": password}, 201
 
 
 class User(Resource):
@@ -113,7 +118,6 @@ def status_update(user_id):
     else:
         time_diff = datetime.utcnow() - user.timestamp
         time_min = (time_diff.seconds // 60) % 60
-        print(time_min)
 
     if time_min > 5:
         UserModel.query.filter(UserModel.id == user_id).update({UserModel.account_state: "rejected"},
@@ -126,9 +130,3 @@ def status_update(user_id):
     db.session.commit()
     return {"message": f"Update User Status By Id  {user_id}"}, 200
 
-# args = RequestParser()
-# args.add_argument("url", type=str, required=True, help="Name has to be passed")
-#  @app.route("/init", methods=["POST"])
-# def get_url():
-#     print(args.parse_args())
-#     return {"message": "Success"}, 200

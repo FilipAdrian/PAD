@@ -9,6 +9,7 @@ class UserModel(db.Model):
     name = db.Column(db.String(32), nullable=False)
     surname = db.Column(db.String(32), nullable=False)
     type = db.Column(db.String(32), nullable=False)
+    money_amount = db.Column(db.Float, nullable=False, default=0)
     username = db.Column(db.String(32), nullable=True)
     password = db.Column(db.String(32), nullable=True)
     account_state = db.Column(db.String(32), nullable=False, default="inProgress")
