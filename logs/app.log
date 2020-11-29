@@ -1,0 +1,74 @@
+2020-11-30 00:03:18,723 -config -15260-WARNING-Publisher Was Initiated
+2020-11-30 00:03:18,731 -pika.adapters.utils.connection_workflow -15260-INFO-Pika version 1.1.0 connecting to ('::1', 5672, 0, 0)
+2020-11-30 00:03:18,733 -pika.adapters.utils.io_services_utils -15260-INFO-Socket connected: <socket.socket fd=924, family=AddressFamily.AF_INET6, type=SocketKind.SOCK_STREAM, proto=6, laddr=('::1', 52071, 0, 0), raddr=('::1', 5672, 0, 0)>
+2020-11-30 00:03:18,733 -pika.adapters.utils.connection_workflow -15260-INFO-Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050A6FB8>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050A6FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+2020-11-30 00:03:18,786 -pika.adapters.utils.connection_workflow -15260-INFO-AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050A6FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:03:18,786 -pika.adapters.utils.connection_workflow -15260-INFO-AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050A6FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:03:18,786 -pika.adapters.blocking_connection -15260-INFO-Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050A6FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:03:18,786 -pika.adapters.blocking_connection -15260-INFO-Created channel=1
+2020-11-30 00:03:18,793 -config -15260-WARNING-Consumer Was Initiated
+2020-11-30 00:03:18,794 -pika.adapters.utils.connection_workflow -15260-INFO-Pika version 1.1.0 connecting to ('::1', 5672, 0, 0)
+2020-11-30 00:03:18,796 -pika.adapters.utils.io_services_utils -15260-INFO-Socket connected: <socket.socket fd=1080, family=AddressFamily.AF_INET6, type=SocketKind.SOCK_STREAM, proto=6, laddr=('::1', 52074, 0, 0), raddr=('::1', 5672, 0, 0)>
+2020-11-30 00:03:18,796 -pika.adapters.utils.connection_workflow -15260-INFO-Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050BE490>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050BE490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+2020-11-30 00:03:18,866 -pika.adapters.utils.connection_workflow -15260-INFO-AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050BE490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:03:18,866 -pika.adapters.utils.connection_workflow -15260-INFO-AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050BE490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:03:18,866 -pika.adapters.blocking_connection -15260-INFO-Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050BE490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:03:18,866 -pika.adapters.blocking_connection -15260-INFO-Created channel=1
+2020-11-30 00:03:18,958 -sqlalchemy.engine.base.Engine -15260-INFO-select version()
+2020-11-30 00:03:18,958 -sqlalchemy.engine.base.Engine -15260-INFO-{}
+2020-11-30 00:03:18,960 -sqlalchemy.engine.base.Engine -15260-INFO-select current_schema()
+2020-11-30 00:03:18,960 -sqlalchemy.engine.base.Engine -15260-INFO-{}
+2020-11-30 00:03:18,961 -sqlalchemy.engine.base.Engine -15260-INFO-SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+2020-11-30 00:03:18,961 -sqlalchemy.engine.base.Engine -15260-INFO-{}
+2020-11-30 00:03:18,962 -sqlalchemy.engine.base.Engine -15260-INFO-SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+2020-11-30 00:03:18,962 -sqlalchemy.engine.base.Engine -15260-INFO-{}
+2020-11-30 00:03:18,963 -sqlalchemy.engine.base.Engine -15260-INFO-show standard_conforming_strings
+2020-11-30 00:03:18,963 -sqlalchemy.engine.base.Engine -15260-INFO-{}
+2020-11-30 00:03:18,964 -sqlalchemy.engine.base.Engine -15260-INFO-select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2020-11-30 00:03:18,964 -sqlalchemy.engine.base.Engine -15260-INFO-{'name': 'users'}
+2020-11-30 00:03:19,554 -config -15260-WARNING-Gateway Connection Established ...
+2020-11-30 00:03:19,596 -message_broker.consumer -15260-INFO-Consumer Here
+2020-11-30 00:04:28,953 -config -4336-WARNING-Publisher Was Initiated
+2020-11-30 00:04:28,960 -pika.adapters.utils.connection_workflow -4336-INFO-Pika version 1.1.0 connecting to ('::1', 5672, 0, 0)
+2020-11-30 00:04:28,961 -pika.adapters.utils.io_services_utils -4336-INFO-Socket connected: <socket.socket fd=1000, family=AddressFamily.AF_INET6, type=SocketKind.SOCK_STREAM, proto=6, laddr=('::1', 52083, 0, 0), raddr=('::1', 5672, 0, 0)>
+2020-11-30 00:04:28,962 -pika.adapters.utils.connection_workflow -4336-INFO-Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050D5FB8>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050D5FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+2020-11-30 00:04:29,017 -pika.adapters.utils.connection_workflow -4336-INFO-AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050D5FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:04:29,017 -pika.adapters.utils.connection_workflow -4336-INFO-AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050D5FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:04:29,017 -pika.adapters.blocking_connection -4336-INFO-Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050D5FB8> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:04:29,018 -pika.adapters.blocking_connection -4336-INFO-Created channel=1
+2020-11-30 00:04:29,024 -config -4336-WARNING-Consumer Was Initiated
+2020-11-30 00:04:29,026 -pika.adapters.utils.connection_workflow -4336-INFO-Pika version 1.1.0 connecting to ('::1', 5672, 0, 0)
+2020-11-30 00:04:29,026 -pika.adapters.utils.io_services_utils -4336-INFO-Socket connected: <socket.socket fd=972, family=AddressFamily.AF_INET6, type=SocketKind.SOCK_STREAM, proto=6, laddr=('::1', 52086, 0, 0), raddr=('::1', 5672, 0, 0)>
+2020-11-30 00:04:29,027 -pika.adapters.utils.connection_workflow -4336-INFO-Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050F0490>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050F0490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+2020-11-30 00:04:29,086 -pika.adapters.utils.connection_workflow -4336-INFO-AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050F0490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:04:29,087 -pika.adapters.utils.connection_workflow -4336-INFO-AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050F0490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:04:29,087 -pika.adapters.blocking_connection -4336-INFO-Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x050F0490> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2020-11-30 00:04:29,087 -pika.adapters.blocking_connection -4336-INFO-Created channel=1
+2020-11-30 00:04:29,181 -sqlalchemy.engine.base.Engine -4336-INFO-select version()
+2020-11-30 00:04:29,181 -sqlalchemy.engine.base.Engine -4336-INFO-{}
+2020-11-30 00:04:29,183 -sqlalchemy.engine.base.Engine -4336-INFO-select current_schema()
+2020-11-30 00:04:29,183 -sqlalchemy.engine.base.Engine -4336-INFO-{}
+2020-11-30 00:04:29,184 -sqlalchemy.engine.base.Engine -4336-INFO-SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+2020-11-30 00:04:29,184 -sqlalchemy.engine.base.Engine -4336-INFO-{}
+2020-11-30 00:04:29,185 -sqlalchemy.engine.base.Engine -4336-INFO-SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+2020-11-30 00:04:29,185 -sqlalchemy.engine.base.Engine -4336-INFO-{}
+2020-11-30 00:04:29,185 -sqlalchemy.engine.base.Engine -4336-INFO-show standard_conforming_strings
+2020-11-30 00:04:29,186 -sqlalchemy.engine.base.Engine -4336-INFO-{}
+2020-11-30 00:04:29,187 -sqlalchemy.engine.base.Engine -4336-INFO-select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2020-11-30 00:04:29,187 -sqlalchemy.engine.base.Engine -4336-INFO-{'name': 'users'}
+2020-11-30 00:04:29,759 -config -4336-WARNING-Gateway Connection Established ...
+2020-11-30 00:06:53,406 -config -6196-WARNING-Publisher Was Initiated
+2020-11-30 00:06:53,484 -config -6196-WARNING-Consumer Was Initiated
+2020-11-30 00:06:53,634 -sqlalchemy.engine.base.Engine -6196-INFO-select version()
+2020-11-30 00:06:53,634 -sqlalchemy.engine.base.Engine -6196-INFO-{}
+2020-11-30 00:06:53,636 -sqlalchemy.engine.base.Engine -6196-INFO-select current_schema()
+2020-11-30 00:06:53,636 -sqlalchemy.engine.base.Engine -6196-INFO-{}
+2020-11-30 00:06:53,637 -sqlalchemy.engine.base.Engine -6196-INFO-SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+2020-11-30 00:06:53,637 -sqlalchemy.engine.base.Engine -6196-INFO-{}
+2020-11-30 00:06:53,638 -sqlalchemy.engine.base.Engine -6196-INFO-SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+2020-11-30 00:06:53,638 -sqlalchemy.engine.base.Engine -6196-INFO-{}
+2020-11-30 00:06:53,638 -sqlalchemy.engine.base.Engine -6196-INFO-show standard_conforming_strings
+2020-11-30 00:06:53,638 -sqlalchemy.engine.base.Engine -6196-INFO-{}
+2020-11-30 00:06:53,640 -sqlalchemy.engine.base.Engine -6196-INFO-select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2020-11-30 00:06:53,640 -sqlalchemy.engine.base.Engine -6196-INFO-{'name': 'users'}
+2020-11-30 00:06:54,231 -config -6196-WARNING-Gateway Connection Established ...
