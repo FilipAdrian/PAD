@@ -1,11 +1,10 @@
-from model.user_model import *
-
 from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
-from config import db, app, limiter, env_args
 from marshmallow import ValidationError
-from common.common import get_random_alphanumeric_string
-from datetime import datetime
+
+from config import app, limiter, env_args
+from model.user_model import *
+from utils.common import get_random_alphanumeric_string
 
 api_capacity = int(env_args["DEFAULT_CAPACITY"])
 
@@ -129,4 +128,3 @@ def status_update(user_id):
                                                            synchronize_session=False)
     db.session.commit()
     return {"message": f"Update User Status By Id  {user_id}"}, 200
-

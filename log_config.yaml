@@ -4,7 +4,6 @@ formatters:
   simple:
     format: '%(asctime)-15s -%(name)s -%(process)d-%(levelname)s-%(message)s'
 handlers:
-
   console:
     class: logging.StreamHandler
     level: DEBUG

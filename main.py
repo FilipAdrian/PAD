@@ -1,6 +1,5 @@
 from config import api, app, check_db_connection, connect_to_gateway, env_args
 from resources.user import User, Users
-
 # Add API resources
 api.add_resource(Users, "/users", endpoint="users")
 api.add_resource(User, "/users/<int:user_id>", endpoint="user-by-id")

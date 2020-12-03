@@ -1,4 +1,4 @@
-import logging
+from utils import logging
 import os
 
 import requests
@@ -76,21 +76,13 @@ def connect_to_gateway():
     return g_request.status_code
 
 
-def get_publisher():
-    broker_config = message_broker.BrokerConfiguration(env_args["RABBITMQ_HOST"], env_args["RABBITMQ_PORT"],
-                                                       env_args["RABBITMQ_USER"], env_args["RABBITMQ_PASSWORD"],
-                                                       [env_args["ORDER_Q_NAME"],
-                                                        env_args["PRODUCT_COMPENSATION_Q_NAME"]], '')
-    logger.warning("Publisher Was Initiated")
-    return message_broker.Publisher(broker_config)
-
-
-def get_consumer():
-    broker_config = message_broker.BrokerConfiguration(env_args["RABBITMQ_HOST"], env_args["RABBITMQ_PORT"],
-                                                       env_args["RABBITMQ_USER"], env_args["RABBITMQ_PASSWORD"],
-                                                       [env_args["PRODUCT_Q_NAME"]], '')
-    logger.warning("Consumer Was Initiated")
-    return message_broker.Consumer(broker_config)
+def get_message_broker():
+    broker = message_broker.MessageBroker(env_args["RABBITMQ_HOST"], env_args["RABBITMQ_PORT"],
+                                          env_args["RABBITMQ_USER"], env_args["RABBITMQ_PASSWORD"], '')
+    logger.warning("Connection To Message Broker Was Initiated")
+    broker.init_qs([env_args["ORDER_Q_NAME"],
+                    env_args["PRODUCT_COMPENSATION_Q_NAME"], env_args["PRODUCT_Q_NAME"]])
+    return broker
 
 
 def get_limiter(app):
@@ -106,8 +98,7 @@ def get_limiter(app):
 if __name__ == 'config':
     env_args = get_env_variable()
     app, api = init_application()
-    publisher = get_publisher()
-    consumer = get_consumer()
+    broker = get_message_broker()
     db = init_db(app)
     limiter = get_limiter(app)
     ma_serializable = Marshmallow(app)
