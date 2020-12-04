@@ -1,8 +1,22 @@
+from os import environ
+
 import pika
 
+import message_broker.transaction as transaction
+from utils.common import logging
 
-def callback(ch, method, properties, body):
-    print("Message was received %r" % body)
+logger = logging.getLogger(__name__)
+
+
+def get_message_broker():
+    broker = MessageBroker(environ["RABBITMQ_HOST"], environ["RABBITMQ_PORT"],
+                           environ["RABBITMQ_USER"], environ["RABBITMQ_PASSWORD"], '')
+    logger.warning("Connection To Message Broker Was Initiated")
+    broker.init_qs([environ["ORDER_Q_NAME"],
+                    environ["PRODUCT_COMPENSATION_Q_NAME"],
+                    environ["PRODUCT_Q_NAME"],
+                    environ["ORDER_COMPENSATION_Q_NAME"]])
+    return broker
 
 
 class MessageBroker:
@@ -53,12 +67,16 @@ class MessageBroker:
             routing_key=q_name,
             body=payload)
 
-    def consumer(self, q_name):
+    def consume(self, q_name):
         """
 
         :param q_name: Queue Name that will be consumed
         :return: None
         """
+
+        def callback(ch, method, properties, body):
+            transaction.process_transaction(body, self)
+
         self._channel.basic_consume(
             queue=q_name,
             on_message_callback=callback,

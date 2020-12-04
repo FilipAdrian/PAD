@@ -1,12 +1,14 @@
+from os import environ
+
 from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 from marshmallow import ValidationError
 
-from config import app, limiter, env_args
+from config import app, limiter
 from model.user_model import *
 from utils.common import get_random_alphanumeric_string
 
-api_capacity = int(env_args["DEFAULT_CAPACITY"])
+api_capacity = int(environ["DEFAULT_CAPACITY"])
 
 user_create_requirements = RequestParser(bundle_errors=True)
 user_create_requirements.add_argument("name", type=str, required=True, help="Name has to be passed")
@@ -95,9 +97,7 @@ class User(Resource):
         for key in args.keys():
             if args[key]:
                 user.__setattr__(key, args[key])
-        UserModel.query.filter(UserModel.id == user_id, UserModel.account_state != "rejected") \
-            .update(user_schema.dump(user))
-        db.session.commit()
+        update(user)
         return {"message": f"User with Id = {user_id}, was successfully Updated"}, 200
 
     def delete(self, user_id):
@@ -107,7 +107,13 @@ class User(Resource):
         return "", 204
 
 
-@app.route(env_args["API_BASE_PATH"] + "/users/<int:user_id>/status", methods=["PATCH"])
+def update(user):
+    UserModel.query.filter(UserModel.id == user.id, UserModel.account_state != "rejected") \
+        .update(user_schema.dump(user))
+    db.session.commit()
+
+
+@app.route(environ["API_BASE_PATH"] + "/users/<int:user_id>/status", methods=["PATCH"])
 @limiter.exempt
 def status_update(user_id):
     args = user_patch_requirements.parse_args()

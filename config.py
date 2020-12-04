@@ -1,6 +1,4 @@
-from utils import logging
-import os
-
+from os import environ
 import requests
 from flask import Flask
 from flask_limiter import Limiter
@@ -11,53 +9,31 @@ from flask_sqlalchemy import SQLAlchemy
 from requests import RequestException
 from retry import retry
 from sqlalchemy.exc import OperationalError
-
-import message_broker
+from utils import logging
 
 logger = logging.getLogger(__name__)
 
 
-def get_env_variable():
-    return {
-        "DB_USERNAME": os.environ.get('DB_USERNAME'),
-        "DB_PASSWORD": os.environ.get('DB_PASSWORD'),
-        "DB_HOST": os.environ.get('DB_HOST'),
-        "DB_PORT": os.environ.get('DB_PORT'),
-        "DB_SCHEMA": os.environ.get('DB_SCHEMA'),
-        "API_PORT": os.environ.get('API_PORT'),
-        "API_HOST": os.environ.get('API_HOST'),
-        "API_BASE_PATH": os.environ.get('API_BASE_PATH'),
-        "DEFAULT_RATE_LIMIT": os.environ.get('DEFAULT_RATE_LIMIT'),
-        "DEFAULT_CAPACITY": os.environ.get('DEFAULT_CAPACITY'),
-        "GATEWAY_URL": os.environ.get('GATEWAY_URL'),
-        "RABBITMQ_HOST": os.environ.get('RABBITMQ_HOST'),
-        "RABBITMQ_PORT": os.environ.get('RABBITMQ_PORT'),
-        "RABBITMQ_USER": os.environ.get('RABBITMQ_USER'),
-        "RABBITMQ_PASSWORD": os.environ.get('RABBITMQ_PASSWORD'),
-        "ORDER_Q_NAME": os.environ.get('ORDER_Q_NAME'),
-        "PRODUCT_Q_NAME": os.environ.get('PRODUCT_Q_NAME'),
-        "PRODUCT_COMPENSATION_Q_NAME": os.environ.get('PRODUCT_COMPENSATION_Q_NAME'),
-    }
-
-
 def init_application():
     application = Flask(__name__)
-    api_rest = Api(application, prefix=env_args["API_BASE_PATH"])
+    api_rest = Api(application, prefix=environ["API_BASE_PATH"])
     return application, api_rest
 
 
 def init_db(app):
     DATABASE_URI = 'postgres+psycopg2://' \
-                   f'{env_args["DB_USERNAME"]}:' \
-                   f'{env_args["DB_PASSWORD"]}' \
-                   f'@{env_args["DB_HOST"]}:' \
-                   f'{env_args["DB_PORT"]}' \
-                   f'/{env_args["DB_SCHEMA"]}'
+                   f'{environ["DB_USERNAME"]}:' \
+                   f'{environ["DB_PASSWORD"]}' \
+                   f'@{environ["DB_HOST"]}:' \
+                   f'{environ["DB_PORT"]}' \
+                   f'/{environ["DB_SCHEMA"]}'
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
     db.init_app(app)
+
+
     return db
 
 
@@ -68,21 +44,18 @@ def check_db_connection():
 
 @retry((RequestException, ConnectionError), tries=3, delay=2, backoff=2, logger=logger)
 def connect_to_gateway():
-    url = env_args["GATEWAY_URL"]
+    url = environ["GATEWAY_URL"]
     payload = {"serviceType": "users",
-               "url": f'http://{env_args["API_HOST"]}:{env_args["API_PORT"]}{env_args["API_BASE_PATH"]}'}
+               "url": f'http://{environ["API_HOST"]}:{environ["API_PORT"]}{environ["API_BASE_PATH"]}'}
     g_request = requests.post(url, payload)
-    logger.warning(f"Gateway Connection Established ...")
+    if g_request.status_code == 200:
+        logger.warning(f"Gateway Connection Established ...")
+    else:
+        raise ConnectionError(f"Gateway returned status: {g_request.status_code}")
     return g_request.status_code
 
 
-def get_message_broker():
-    broker = message_broker.MessageBroker(env_args["RABBITMQ_HOST"], env_args["RABBITMQ_PORT"],
-                                          env_args["RABBITMQ_USER"], env_args["RABBITMQ_PASSWORD"], '')
-    logger.warning("Connection To Message Broker Was Initiated")
-    broker.init_qs([env_args["ORDER_Q_NAME"],
-                    env_args["PRODUCT_COMPENSATION_Q_NAME"], env_args["PRODUCT_Q_NAME"]])
-    return broker
+
 
 
 def get_limiter(app):
@@ -90,15 +63,13 @@ def get_limiter(app):
     rate_limiter = Limiter(
         app,
         key_func=get_remote_address,
-        default_limits=[env_args["DEFAULT_RATE_LIMIT"]]
+        default_limits=[environ["DEFAULT_RATE_LIMIT"]]
     )
     return rate_limiter
 
 
 if __name__ == 'config':
-    env_args = get_env_variable()
     app, api = init_application()
-    broker = get_message_broker()
     db = init_db(app)
     limiter = get_limiter(app)
     ma_serializable = Marshmallow(app)
