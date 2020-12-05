@@ -18,6 +18,6 @@ if __name__ == "__main__":
     thread.start()
     connect_to_gateway()
     check_db_connection()
-    app.run(host=environ["API_HOST"], port=environ["API_PORT"], debug=True,
+    app.run(host=environ["API_HOST"], port=environ["API_PORT"], debug=False,
             threaded=True)  # Set up sever host,port enabled debug mode
 

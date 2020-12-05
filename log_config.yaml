@@ -3,6 +3,8 @@ version: 1
 formatters:
   simple:
     format: '%(asctime)-15s -%(name)s -%(process)d-%(levelname)s-%(message)s'
+    class: pythonjsonlogger.jsonlogger.JsonFormatter
+
 handlers:
   console:
     class: logging.StreamHandler
@@ -10,11 +12,10 @@ handlers:
     formatter: simple
     stream: ext://sys.stdout
   file:
-    class: logging.FileHandler
+    class: logging.handlers.WatchedFileHandler
     formatter: simple
-    filename: './logs/app.log'
-#    maxBytes: 1024
-#    backupCount: 3
+    mode: a
+    filename: './logs/user-api.log'
 
 loggers:
   sampleLogger:

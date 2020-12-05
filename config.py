@@ -39,6 +39,7 @@ def init_db(app):
 
 @retry(OperationalError, tries=3, delay=2, backoff=2, logger=logger)
 def check_db_connection():
+    logger.warning("DB Connection Was Initiated")
     db.create_all()
 
 
