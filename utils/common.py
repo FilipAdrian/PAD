@@ -1,7 +1,15 @@
 import logging.config
-import logging
+import os
 import random
 import string
+
+import yaml
+from jproperties import Properties
+import logging.config
+import os
+import random
+import string
+
 import yaml
 from jproperties import Properties
 
@@ -11,6 +19,8 @@ with open('app-config.properties', 'rb') as config_file:
     config.load(config_file)
 
 with open('log_config.yaml', 'r') as log_config_file:
+    if not os.path.exists('logs'):
+        os.makedirs('logs')
     log_config = yaml.safe_load(log_config_file.read())
     logging.config.dictConfig(log_config)
 
