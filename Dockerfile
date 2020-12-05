@@ -1,7 +1,7 @@
 FROM python:3.8
 
-WORKDIR /github.com/FilipAdrian/PAD
-COPY ./PAD .
+WORKDIR /github.com/FilipAdrian/PAD_User_Service
+COPY ./PAD_User_Service .
 
 RUN pip install -r requirements.txt
 
