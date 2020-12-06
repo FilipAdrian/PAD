@@ -9,8 +9,8 @@ from flask_sqlalchemy import SQLAlchemy
 from requests import RequestException
 from retry import retry
 from sqlalchemy.exc import OperationalError
-from utils import logging
-
+from utils.common import logging
+logging.getLogger('sqlalchemy').setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
 
 

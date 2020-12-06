@@ -5,6 +5,7 @@ import pika
 import message_broker.transaction as transaction
 from utils.common import logging
 
+logging.getLogger("pika").propagate = False
 logger = logging.getLogger(__name__)
 
 

@@ -2,14 +2,6 @@ import logging.config
 import os
 import random
 import string
-
-import yaml
-from jproperties import Properties
-import logging.config
-import os
-import random
-import string
-
 import yaml
 from jproperties import Properties
 
