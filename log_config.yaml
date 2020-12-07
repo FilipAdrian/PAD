@@ -16,7 +16,13 @@ handlers:
     formatter: simple
     mode: a
     filename: './logs/user-api.log'
-
+  tcp:
+    class: logstash_async.handler.AsynchronousLogstashHandler
+    level: INFO
+    formatter: simple
+    host: $LOG_HOST
+    port: 9500
+    database_path: 'None'
 loggers:
   sampleLogger:
     level: DEBUG
@@ -24,4 +30,4 @@ loggers:
     propagate: no
 root:
   level: INFO
-  handlers: [console, file]
+  handlers: [console, file, tcp]
